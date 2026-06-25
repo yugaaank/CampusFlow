@@ -17,7 +17,7 @@ export function DailyBriefing() {
 
         if (!session?.access_token) return
 
-        const response = await fetch('http://localhost:5000/api/v1/ai/daily-briefing', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/v1/ai/daily-briefing`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${session.access_token}`

@@ -27,7 +27,7 @@ export default function StudyBuddyPage() {
         throw new Error('Not authenticated')
       }
 
-      const response = await fetch('http://localhost:5000/api/v1/ai/study-buddy', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/v1/ai/study-buddy`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

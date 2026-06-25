@@ -23,7 +23,7 @@ export default function NoticeSummarizerPage() {
         throw new Error('Not authenticated')
       }
 
-      const response = await fetch('http://localhost:5000/api/v1/ai/summarize-notice', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/v1/ai/summarize-notice`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
