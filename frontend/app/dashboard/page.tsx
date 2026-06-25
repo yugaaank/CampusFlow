@@ -2,14 +2,38 @@ import { createClient } from '@/utils/supabase/server'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Bot, FileText, CheckCircle2, Clock, Plus, Target, Sparkles, BookOpen } from 'lucide-react'
+import Link from 'next/link'
 
 export default async function Dashboard() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  
-  // We'll mock the data since the backend Tasks API isn't fully integrated yet
-  const pendingTasks = 3
-  const upcomingDeadlines = 2
+
+  // Fetch real task stats from Supabase
+  let pendingTasks = 0
+  let upcomingDeadlines = 0
+
+  if (user && 'from' in supabase) {
+    const { data: tasks } = await (supabase as any)
+      .from('tasks')
+      .select('id, completed, deadline')
+      .eq('user_id', user.id)
+
+    if (tasks) {
+      pendingTasks = tasks.filter((t: any) => !t.completed).length
+      const now = new Date()
+      const in7Days = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000)
+      upcomingDeadlines = tasks.filter((t: any) => {
+        if (!t.deadline || t.completed) return false
+        const d = new Date(t.deadline)
+        return d >= now && d <= in7Days
+      }).length
+    }
+  }
+
+  const dueToday = (() => {
+    // Computed server-side — kept minimal since we don't have full task data here
+    return 0
+  })()
 
   return (
     <div className="p-6 md:p-10 max-w-7xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -22,34 +46,42 @@ export default async function Dashboard() {
           </h1>
           <p className="text-slate-500 mt-1 text-lg">Here&apos;s what&apos;s happening with your academics today.</p>
         </div>
-        <Button className="bg-gradient-to-r from-blue-600 to-emerald-500 text-white border-0 shadow-lg hover:shadow-xl transition-all rounded-xl h-11 px-6">
-          <Plus className="w-5 h-5 mr-2" /> New Task
-        </Button>
+        <Link href="/dashboard/tasks">
+          <Button className="bg-gradient-to-r from-blue-600 to-emerald-500 text-white border-0 shadow-lg hover:shadow-xl transition-all rounded-xl h-11 px-6">
+            <Plus className="w-5 h-5 mr-2" /> New Task
+          </Button>
+        </Link>
       </div>
 
       {/* Quick Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="border-0 shadow-sm bg-white dark:bg-slate-900/50 backdrop-blur-xl rounded-2xl">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-bold text-slate-500 uppercase tracking-wide">Pending Tasks</CardTitle>
-            <CheckCircle2 className="w-5 h-5 text-blue-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-4xl font-extrabold text-slate-900 dark:text-white">{pendingTasks}</div>
-            <p className="text-sm font-medium text-slate-500 mt-1">2 due today</p>
-          </CardContent>
-        </Card>
+        <Link href="/dashboard/tasks?filter=pending" className="block">
+          <Card className="border-0 shadow-sm bg-white dark:bg-slate-900/50 backdrop-blur-xl rounded-2xl hover:shadow-md transition-all cursor-pointer group">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-bold text-slate-500 uppercase tracking-wide">Pending Tasks</CardTitle>
+              <CheckCircle2 className="w-5 h-5 text-blue-500 group-hover:scale-110 transition-transform" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-4xl font-extrabold text-slate-900 dark:text-white">{pendingTasks}</div>
+              <p className="text-sm font-medium text-slate-500 mt-1">
+                {pendingTasks === 0 ? 'All caught up! 🎉' : `${pendingTasks} task${pendingTasks > 1 ? 's' : ''} remaining`}
+              </p>
+            </CardContent>
+          </Card>
+        </Link>
         
-        <Card className="border-0 shadow-sm bg-white dark:bg-slate-900/50 backdrop-blur-xl rounded-2xl">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-bold text-slate-500 uppercase tracking-wide">Deadlines</CardTitle>
-            <Clock className="w-5 h-5 text-orange-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-4xl font-extrabold text-slate-900 dark:text-white">{upcomingDeadlines}</div>
-            <p className="text-sm font-medium text-slate-500 mt-1">Within next 7 days</p>
-          </CardContent>
-        </Card>
+        <Link href="/dashboard/tasks" className="block">
+          <Card className="border-0 shadow-sm bg-white dark:bg-slate-900/50 backdrop-blur-xl rounded-2xl hover:shadow-md transition-all cursor-pointer group">
+            <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardTitle className="text-sm font-bold text-slate-500 uppercase tracking-wide">Deadlines</CardTitle>
+              <Clock className="w-5 h-5 text-orange-500 group-hover:scale-110 transition-transform" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-4xl font-extrabold text-slate-900 dark:text-white">{upcomingDeadlines}</div>
+              <p className="text-sm font-medium text-slate-500 mt-1">Within next 7 days</p>
+            </CardContent>
+          </Card>
+        </Link>
         
         <Card className="border-0 shadow-lg bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500 rounded-full blur-3xl opacity-20" />
