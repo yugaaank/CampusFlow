@@ -11,11 +11,15 @@ export default async function ProfilePage() {
   }
 
   // Fetch the user's profile from the profiles table
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', user.id)
-    .single()
+  let profile = {}
+  if ('from' in supabase) {
+    const { data } = await (supabase as any)
+      .from('profiles')
+      .select('*')
+      .eq('id', user.id)
+      .single()
+    if (data) profile = data
+  }
 
   return (
     <div className="p-8 md:p-12 max-w-4xl mx-auto space-y-12">
