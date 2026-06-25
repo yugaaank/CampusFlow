@@ -21,8 +21,7 @@ The user has provided a college notice below. Extract the following information 
 
 {
   "summary": ["Bullet point 1", "Bullet point 2", "Bullet point 3"],
-  "eventDate": "YYYY-MM-DD" (or null if no specific date),
-  "whatsappDraft": "A short, friendly 1-2 sentence message to send to a WhatsApp group announcing this notice."
+  "eventDate": "YYYY-MM-DD" (or null if no specific date)
 }
 
 College Notice:

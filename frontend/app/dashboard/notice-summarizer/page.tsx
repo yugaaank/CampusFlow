@@ -1,13 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { FileText, Calendar as CalendarIcon, MessageCircle, Loader2, ArrowRight } from 'lucide-react'
+import { FileText, Calendar as CalendarIcon, Loader2, ArrowRight } from 'lucide-react'
 import { createClient } from '@/utils/supabase/client'
 
 export default function NoticeSummarizerPage() {
   const [noticeText, setNoticeText] = useState('')
   const [loading, setLoading] = useState(false)
-  const [result, setResult] = useState<{ summary: string[]; eventDate: string | null; whatsappDraft: string } | null>(null)
+  const [result, setResult] = useState<{ summary: string[]; eventDate: string | null } | null>(null)
   const [error, setError] = useState('')
 
   const handleSummarize = async () => {
@@ -157,29 +157,6 @@ export default function NoticeSummarizerPage() {
                 </div>
               )}
 
-              {/* WhatsApp Draft Card */}
-              <div
-                className="rounded-xl p-6 border"
-                style={{ backgroundColor: 'var(--color-surface)', borderColor: 'var(--color-rule)' }}
-              >
-                <h3 className="text-sm font-semibold flex items-center gap-2 mb-3" style={{ color: 'var(--color-ink)' }}>
-                  <MessageCircle className="w-4 h-4" style={{ color: 'oklch(55% 0.14 150)' }} />
-                  WhatsApp Draft
-                </h3>
-                <div
-                  className="rounded-lg p-4 text-sm leading-relaxed"
-                  style={{ backgroundColor: 'var(--color-paper)', color: 'var(--color-ink-2)' }}
-                >
-                  &ldquo;{result.whatsappDraft}&rdquo;
-                </div>
-                <button
-                  onClick={() => navigator.clipboard.writeText(result.whatsappDraft)}
-                  className="mt-3 text-sm font-medium transition-all hover:opacity-70"
-                  style={{ color: 'var(--color-accent)' }}
-                >
-                  Copy to Clipboard
-                </button>
-              </div>
             </div>
           ) : (
             <div

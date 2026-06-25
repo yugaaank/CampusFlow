@@ -7,7 +7,6 @@ export interface Task {
   deadline?: string;
   priority: 'low' | 'medium' | 'high';
   completed: boolean;
-  add_to_calendar: boolean;
   created_at: string;
 }
 
@@ -17,7 +16,6 @@ export interface CreateTaskDto {
   description?: string;
   deadline?: string;
   priority?: 'low' | 'medium' | 'high';
-  add_to_calendar?: boolean;
 }
 
 export interface UpdateTaskDto {
@@ -27,5 +25,4 @@ export interface UpdateTaskDto {
   deadline?: string;
   priority?: 'low' | 'medium' | 'high';
   completed?: boolean;
-  add_to_calendar?: boolean;
 }

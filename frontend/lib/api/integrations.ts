@@ -23,33 +23,4 @@ async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> 
   return json;
 }
 
-export const calendarApi = {
-  getAuthUrl: () =>
-    apiFetch<{ success: boolean; url: string }>('/api/v1/calendar/auth'),
 
-  getStatus: () =>
-    apiFetch<{ success: boolean; connected: boolean; email: string | null }>('/api/v1/calendar/status'),
-
-  disconnect: () =>
-    apiFetch<{ success: boolean; message: string }>('/api/v1/calendar/disconnect', { method: 'POST' }),
-
-  createEvent: (data: { summary: string; description?: string; startTime: string; endTime: string }) =>
-    apiFetch<{ success: boolean; event: any }>('/api/v1/calendar/events', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    }),
-};
-
-export const whatsappApi = {
-  sendTest: () =>
-    apiFetch<{ success: boolean; message: string }>('/api/v1/whatsapp/test', { method: 'POST' }),
-
-  send: (to: string, message: string) =>
-    apiFetch<{ success: boolean; message: string }>('/api/v1/whatsapp/send', {
-      method: 'POST',
-      body: JSON.stringify({ to, message }),
-    }),
-
-  sendReminder: (taskId: string) =>
-    apiFetch<{ success: boolean; message: string }>(`/api/v1/whatsapp/remind/${taskId}`, { method: 'POST' }),
-};

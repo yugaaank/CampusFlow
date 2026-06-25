@@ -2,8 +2,6 @@ import type { Response } from 'express';
 import { getScopedClient } from '../config/supabase.js';
 import type { AuthRequest } from '../middleware/auth.middleware.js';
 import type { CreateTaskDto, UpdateTaskDto } from '../types/task.types.js';
-import { createCalendarEvent } from '../services/google-calendar.service.js';
-
 // GET /api/v1/tasks
 export const getTasks = async (req: AuthRequest, res: Response) => {
   try {
@@ -61,7 +59,7 @@ export const getTask = async (req: AuthRequest, res: Response) => {
 export const createTask = async (req: AuthRequest, res: Response) => {
   try {
     const userId = req.userId;
-    const { title, subject, description, deadline, priority, add_to_calendar }: CreateTaskDto = req.body;
+    const { title, subject, description, deadline, priority }: CreateTaskDto = req.body;
 
     if (!title) {
       return res.status(400).json({ success: false, message: 'Title is required' });
@@ -77,7 +75,6 @@ export const createTask = async (req: AuthRequest, res: Response) => {
         description: description || null,
         deadline: deadline || null,
         priority: priority || 'medium',
-        add_to_calendar: add_to_calendar || false,
         completed: false,
       }])
       .select()
@@ -85,31 +82,6 @@ export const createTask = async (req: AuthRequest, res: Response) => {
 
     if (error) {
       return res.status(400).json({ success: false, message: error.message });
-    }
-
-    // If add_to_calendar is true, try creating a Google Calendar event
-    if (add_to_calendar && deadline) {
-      try {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('google_calendar_refresh_token')
-          .eq('id', userId)
-          .single();
-
-        if (profile?.google_calendar_refresh_token) {
-          const startTime = new Date(deadline).toISOString();
-          const endTime = new Date(new Date(deadline).getTime() + 60 * 60 * 1000).toISOString();
-
-          await createCalendarEvent(profile.google_calendar_refresh_token, {
-            summary: title,
-            description: `${subject ? `[${subject}] ` : ''}${description || ''}`,
-            startTime,
-            endTime,
-          });
-        }
-      } catch (calError: any) {
-        console.warn('Failed to create Google Calendar event:', calError.message);
-      }
     }
 
     res.status(201).json({ success: true, task: data });

@@ -24,13 +24,12 @@ export function AddTaskModal({ isOpen, onClose, onAdd }: AddTaskModalProps) {
     description: '',
     deadline: '',
     priority: 'medium',
-    add_to_calendar: false,
   })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
   const reset = () => {
-    setForm({ title: '', subject: '', description: '', deadline: '', priority: 'medium', add_to_calendar: false })
+    setForm({ title: '', subject: '', description: '', deadline: '', priority: 'medium' })
     setError('')
   }
 
@@ -232,27 +231,6 @@ export function AddTaskModal({ isOpen, onClose, onAdd }: AddTaskModalProps) {
                     }}
                   />
                 </div>
-
-                {/* Calendar toggle */}
-                <label className="flex items-center gap-3 py-1 cursor-pointer group">
-                  <div
-                    onClick={() => setForm({ ...form, add_to_calendar: !form.add_to_calendar })}
-                    className="relative w-10 h-5 rounded-full transition-colors duration-200"
-                    style={{
-                      backgroundColor: form.add_to_calendar ? 'var(--color-accent)' : 'var(--color-rule)',
-                    }}
-                  >
-                    <span
-                      className="absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform duration-200"
-                      style={{
-                        transform: form.add_to_calendar ? 'translateX(20px)' : 'translateX(0)',
-                      }}
-                    />
-                  </div>
-                  <span className="text-sm font-medium transition-colors" style={{ color: 'var(--color-ink-2)' }}>
-                    Add to Google Calendar
-                  </span>
-                </label>
 
                 {/* Submit */}
                 <button

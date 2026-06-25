@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   description:
     "CampusFlow helps students manage deadlines, notices, study plans, attendance, placements, and reminders from one dashboard.",
   applicationName: "CampusFlow",
-  keywords: ["students", "productivity", "tasks", "study planner", "WhatsApp reminders", "calendar sync"],
+  keywords: ["students", "productivity", "tasks", "study planner"],
 };
 
 export default function RootLayout({

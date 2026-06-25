@@ -4,9 +4,7 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/auth.routes.js';
 import taskRoutes from './routes/task.routes.js';
 import aiRoutes from './routes/ai.routes.js';
-import calendarRoutes from './routes/calendar.routes.js';
-import whatsappRoutes from './routes/whatsapp.routes.js';
-import webhookRoutes from './routes/webhook.routes.js';
+
 
 dotenv.config();
 
@@ -25,9 +23,7 @@ app.get('/api/v1/health', (req, res) => {
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/tasks', taskRoutes);
 app.use('/api/v1/ai', aiRoutes);
-app.use('/api/v1/calendar', calendarRoutes);
-app.use('/api/v1/whatsapp', whatsappRoutes);
-app.use('/api/v1/webhooks', webhookRoutes);
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

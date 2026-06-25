@@ -1,7 +1,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Bot, FileText, CheckCircle2, Clock, Target, BookOpen } from 'lucide-react'
+import { Bot, FileText, CheckCircle2, Clock, Target, BookOpen, Calendar } from 'lucide-react'
 import Link from 'next/link'
 import { DailyBriefing } from '@/components/dashboard/DailyBriefing'
 
@@ -83,7 +83,7 @@ export default async function Dashboard() {
         <div className="lg:col-span-2 space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-bold tracking-tight" style={{ color: 'var(--color-ink)' }}>Today&apos;s Schedule</h2>
-            <Button variant="ghost" size="sm" className="text-sm font-medium" style={{ color: 'var(--color-accent)' }}>View Calendar</Button>
+            <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full" style={{ backgroundColor: 'oklch(60% 0.20 25 / 0.1)', color: 'var(--destructive)' }}>Calendar — Coming Soon</span>
           </div>
 
           <div className="space-y-4">
@@ -144,21 +144,20 @@ export default async function Dashboard() {
             </div>
           </div>
 
-          <Card className="border overflow-hidden relative rounded-xl" style={{ borderColor: 'var(--color-rule)', backgroundColor: 'var(--color-paper-2)' }}>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: 'var(--color-ink)' }}>
-                WhatsApp Reminders
-              </CardTitle>
-              <CardDescription className="text-sm" style={{ color: 'var(--color-ink-2)' }}>
-                Receive deadline alerts on your phone.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="pt-4">
-              <Button className="w-full text-sm font-semibold rounded-lg" style={{ backgroundColor: 'var(--color-accent)', color: 'var(--primary-foreground)' }}>
-                Connect Device
-              </Button>
-            </CardContent>
-          </Card>
+          <div className="rounded-xl border p-6 space-y-4" style={{ borderColor: 'var(--color-rule)', backgroundColor: 'var(--color-paper-2)' }}>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'oklch(55% 0.18 145 / 0.1)' }}>
+                <Calendar className="w-5 h-5" style={{ color: 'oklch(50% 0.18 145)' }} />
+              </div>
+              <div>
+                <h3 className="text-sm font-semibold" style={{ color: 'var(--color-ink)' }}>WhatsApp Reminders</h3>
+                <p className="text-xs" style={{ color: 'var(--color-ink-2)' }}>Receive deadline alerts on your phone.</p>
+              </div>
+            </div>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold" style={{ backgroundColor: 'oklch(60% 0.20 25 / 0.08)', color: 'var(--destructive)' }}>
+              Not Yet Integrated
+            </div>
+          </div>
         </div>
       </div>
     </div>

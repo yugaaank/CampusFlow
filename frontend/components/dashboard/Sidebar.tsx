@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, CheckSquare, Calendar, Bot, User, LogOut } from 'lucide-react'
+import { LayoutDashboard, CheckSquare, Bot, User, LogOut } from 'lucide-react'
 import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
 
@@ -11,7 +11,6 @@ const navItems = [
   { name: 'Tasks', href: '/dashboard/tasks', icon: CheckSquare },
   { name: 'Study Buddy', href: '/dashboard/study-buddy', icon: Bot },
   { name: 'Notice Summarizer', href: '/dashboard/notice-summarizer', icon: Bot },
-  { name: 'Calendar', href: '/dashboard/calendar', icon: Calendar },
   { name: 'Profile', href: '/dashboard/profile', icon: User },
 ]
 
