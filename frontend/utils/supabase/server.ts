@@ -14,6 +14,11 @@ export const createClient = async () => {
           data: { user: null },
           error: null,
         }),
+        exchangeCodeForSession: async () => ({ error: null }),
+        signInWithOAuth: async () => ({ error: null }),
+        signInWithPassword: async () => ({ data: { session: null, user: null }, error: null }),
+        signOut: async () => ({ error: null }),
+        getSession: async () => ({ data: { session: null }, error: null }),
       },
     } as const;
   }

@@ -14,6 +14,7 @@ export const createClient = () => {
           data: { session: null, user: null },
           error: new Error("Supabase environment variables are not configured."),
         }),
+        signInWithOAuth: async () => ({ error: null }),
         signOut: async () => ({ error: null }),
       },
     } as const;
