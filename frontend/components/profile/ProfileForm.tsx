@@ -43,19 +43,23 @@ export function ProfileForm({ userId, email, initialProfile }: ProfileFormProps)
         .map((s: string) => s.trim())
         .filter(Boolean)
 
-      const { error } = await supabase
-        .from('profiles')
-        .upsert({
-          id: userId,
-          name: formData.name,
-          phone: formData.phone,
-          branch: formData.branch,
-          year: parseInt(formData.year) || null,
-          subjects: subjectsArray,
-          // Don't update created_at, let database handle it if it's new
-        })
+      if ('from' in supabase) {
+        const { error } = await (supabase as any)
+          .from('profiles')
+          .upsert({
+            id: userId,
+            name: formData.name,
+            phone: formData.phone,
+            branch: formData.branch,
+            year: parseInt(formData.year) || null,
+            subjects: subjectsArray,
+            // Don't update created_at, let database handle it if it's new
+          })
 
-      if (error) throw error
+        if (error) throw error
+      } else {
+        throw new Error('Supabase client not fully initialized')
+      }
 
       setMessage({ type: 'success', text: 'Profile updated successfully.' })
       router.refresh()
