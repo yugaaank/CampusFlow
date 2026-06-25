@@ -10,17 +10,17 @@
  */
 
 :root {
-  --color-paper:    oklch(97% 0.008 55);
-  --color-paper-2:  oklch(93.5% 0.012 55);
-  --color-ink:      oklch(16% 0.012 45);
-  --color-ink-2:    oklch(30% 0.010 50);
-  --color-neutral:  oklch(55% 0.008 50);
-  --color-muted:    oklch(72% 0.008 50);
-  --color-rule:     oklch(86% 0.010 55);
-  --color-accent:   oklch(50% 0.16 250);
-  --color-accent-2: oklch(60% 0.14 250);
-  --color-focus:    oklch(55% 0.18 250 / 0.4);
-  --color-surface:  oklch(99% 0.004 55);
+  --color-paper:    oklch(95% 0.03 80);
+  --color-paper-2:  oklch(92% 0.04 80);
+  --color-ink:      oklch(25% 0.02 70);
+  --color-ink-2:    oklch(40% 0.02 70);
+  --color-neutral:  oklch(55% 0.02 75);
+  --color-muted:    oklch(75% 0.03 80);
+  --color-rule:     oklch(86% 0.03 80);
+  --color-accent:   oklch(55% 0.15 45);
+  --color-accent-2: oklch(65% 0.12 45);
+  --color-focus:    oklch(55% 0.15 45 / 0.4);
+  --color-surface:  oklch(98% 0.015 80);
   --color-surface-2: var(--color-paper-2);
 
   --background: var(--color-paper);

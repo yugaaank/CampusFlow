@@ -24,6 +24,8 @@ create table if not exists profiles (
   branch text,
   year integer,
   subjects text[],
+  google_calendar_refresh_token text,
+  google_calendar_email text,
   created_at timestamptz default now()
 );
 
