@@ -1,19 +1,13 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, Geist } from "next/font/google";
+import { Onest } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
-
-const inter = Inter({
-  variable: "--font-inter",
+const onest = Onest({
   subsets: ["latin"],
-});
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
+  variable: "--font-sans",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -36,7 +30,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("h-full", inter.variable, spaceGrotesk.variable, "font-sans", geist.variable)}
+      className={cn("h-full", onest.variable, "font-sans")}
     >
       <body className="min-h-screen bg-background text-foreground antialiased">
         <Providers>{children}</Providers>
